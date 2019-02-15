@@ -1,0 +1,22 @@
+{
+  "name": "pm-server-node",
+  "version": "1.0.0",
+  "description": "Prototype Express server for relaying information between mobile devices for the game Pac Macro.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pacmacro/pm-server-node.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pacmacro/pm-server-node/issues"
+  },
+  "homepage": "https://github.com/pacmacro/pm-server-node#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
