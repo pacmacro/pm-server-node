@@ -1,9 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 
-const serverOptions = {
-  port: 3000
-};
+const serverConfig = require("./config.json");
 
 function setMappings(app) {
   app.use(bodyParser.json());
@@ -37,8 +35,8 @@ function setMappings(app) {
 function main() {
   const app = express();
   setMappings(app);
-  app.listen(serverOptions.port, () => console.log(
-    `[INFO] Server listening on http://localhost:${serverOptions.port}.`
+  app.listen(serverConfig.port, () => console.log(
+    `[INFO] Server listening on http://localhost:${serverConfig.port}.`
   ));
 };
 
