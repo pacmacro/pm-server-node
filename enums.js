@@ -1,5 +1,5 @@
 module.exports = {
-	gameState: {
+	gameStates: {
 		INITIALIZING: "initializing",
 		IN_PROGRESS: "in_progress",
 		FINISHED_PACMAN_WIN: "pacman_win",

@@ -1,147 +1,243 @@
 const enums = require("./enums.js");
-playerNameEnum = enums.playerNames;
+const playerStateEnums = enums.playerStates;
+const playerNameEnums = enums.playerNames;
 
 module.exports = {
-	// all inputs are ENUMs!
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+	Returns:
+		{lon: x.xxx, lat: x.xxx}
+	asserts playerName is valid
+	*/
 	getPlayerLocation: (playerName) => {
-		
-		if(playerName == playerNameEnum.PACMAN)
-			return raw.players.pacman.location;
-		else
-			return null
+		return raw.players[playerName].location;
 	},
+
+	/*
+	Returns:
+		object: {enums.PlayerNames.BLINKY: {lon: x.xx, lat: x.xx}, 
+				...CLYDE,
+				...INKY,
+				...PINKY,
+				...PACMAN}
+	*/
+	getPlayerLocations: () => {
+		return {
+			[playerNameEnums.BLINKY]: raw.players[playerNameEnums.BLINKY].location,
+			[playerNameEnums.CLYDE]: raw.players[playerNameEnums.CLYDE].location,
+			[playerNameEnums.INKY]: raw.players[playerNameEnums.INKY].location,
+			[playerNameEnums.PINKY]: raw.players[playerNameEnums.PINKY].location,
+			[playerNameEnums.PACMAN]: raw.players[playerNameEnums.PACMAN].location
+		};
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+	Returns:
+		state using enums.playerStates from enums.js
+	asserts playerName is valid
+	*/
 	getPlayerState: (playerName) => {
 		return raw.players[playerName].state;
 	},
+
+
+	/*
+	Returns:
+		object: {enums.PlayerNames.BLINKY: "state", 
+				...CLYDE,
+				...INKY,
+				...PINKY,
+				...PACMAN}
+	*/
+	getPlayerStates: () => {
+		return {
+			[playerNameEnums.BLINKY]: raw.players[playerNameEnums.BLINKY].state,
+			[playerNameEnums.CLYDE]: raw.players[playerNameEnums.CLYDE].state,
+			[playerNameEnums.INKY]: raw.players[playerNameEnums.INKY].state,
+			[playerNameEnums.PINKY]: raw.players[playerNameEnums.PINKY].state,
+			[playerNameEnums.PACMAN]: raw.players[playerNameEnums.PACMAN].state
+		};
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+	Returns:
+		object: {
+			location: {lon: x.xx, lat: x.xx},
+			state: "state"
+		}
+	asserts playerName is valid
+	*/
+	getPlayer: (playerName) => {
+		return raw.players[playerName];
+	},
+
+	/*
+	Returns:
+		object: {enums.PlayerNames.BLINKY:{
+					location: {lon: x.xx, lat: x.xx},
+					state: "state"
+				}, 
+				...CLYDE,
+				...INKY,
+				...PINKY,
+				...PACMAN}
+	*/
+	getPlayers: () => {
+		return raw.players;
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+		playerLocation: {lon: float, lat: float}
+	Returns:
+		void
+	asserts playerName is valid and playerLocation is properly formated
+	*/
 	setPlayerLocation: (playerName, newLocation) => {
 		raw.players[playerName].location = newLocation;
 	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+		newState: valid string using enums.playerStates from enums.js
+	Returns:
+		void
+	asserts playerName and newState are valid
+	*/
 	setPlayerState: (playerName, newState) => {
 		raw.players[playerName].state = newState;
-	},
+	}
+
 }
 
 
 
 var raw = {
 	players: {
-		blinky: {
+		[playerNameEnums.BLINKY]: {
 			location: {
 				lon: 0.0,
 				lat: 0.0
 			},
-			state: "available"
+			state: playerStateEnums.UNINITIALIZED
 		},
-		clyde: {
+		[playerNameEnums.CLYDE]: {
 			location: {
 				lon: 0.0,
 				lat: 0.0
 			},
-			state: "available"
+			state: playerStateEnums.UNINITIALIZED
 		},
-		inky: {
+		[playerNameEnums.INKY]: {
 			location: {
 				lon: 0.0,
 				lat: 0.0
 			},
-			state: "available"
+			state: playerStateEnums.UNINITIALIZED
 		},
-		pinky: {
+		[playerNameEnums.PINKY]: {
 			location: {
 				lon: 0.0,
 				lat: 0.0
 			},
-			state: "available"
+			state: playerStateEnums.UNINITIALIZED
 		},
-		pacman: {
+		[playerNameEnums.PACMAN]: {
 			location: {
 				lon: 0.0,
 				lat: 0.0
 			},
-			state: "available"
+			state: playerStateEnums.UNINITIALIZED
 		}
 	},
 	pacdots: {
 		locations: [
 			{
-				"latitude" : 49.280738,
-				"longitude" : -123.118839
+				lon : -123.118839,
+				lat : 49.280738
 			},
 			{
-				"latitude" : 49.281223,
-				"longitude" : -123.116168
+				lon : -123.116168,
+				lat : 49.281223
 			},
 			{
-				"latitude" : 49.281370,
-				"longitude" : -123.119825
+				lon : -123.119825,
+				lat : 49.281370
 			},
 			{
-				"latitude" : 49.281856,
-				"longitude" : -123.117134
+				lon : -123.117134,
+				lat : 49.281856
 			},
 			{
-				"latitude" : 49.282009,
-				"longitude" : -123.120824
+				lon : -123.120824,
+				lat : 49.282009
 			},
 			{
-				"latitude" : 49.282365,
-				"longitude" : -123.114479
+				lon : -123.114479,
+				lat : 49.282365
 			},
 			{
-				"latitude" : 49.282498,
-				"longitude" : -123.118105
+				lon : -123.118105,
+				lat : 49.282498
 			},
 			{
-				"latitude" : 49.282998,
-				"longitude" : -123.115417
+				lon : -123.115417,
+				lat : 49.282998
 			},
 			{
-				"latitude" : 49.283157,
-				"longitude" : -123.119148
+				lon : -123.119148,
+				lat : 49.283157
 			},
 			{
-				"latitude" : 49.283387,
-				"longitude" : -123.112884
+				lon : -123.112884,
+				lat : 49.283387
 			},
 			{
-				"latitude" : 49.283773,
-				"longitude" : -123.120101
+				lon : -123.120101,
+				lat : 49.283773
 			},
 			{
-				"latitude" : 49.284027,
-				"longitude" : -123.113871
+				lon : -123.113871,
+				lat : 49.284027
 			},
 			{
-				"latitude" : 49.284273,
-				"longitude" : -123.117438
+				lon : -123.117438,
+				lat : 49.284273
 			},
 			{
-				"latitude" : 49.284671,
-				"longitude" : -123.112873
+				lon : -123.112873,
+				lat : 49.284671
 			},
 			{
-				"latitude" : 49.284673,
-				"longitude" : -123.114868
+				lon : -123.114868,
+				lat : 49.284673
 			},
 			{
-				"latitude" : 49.284896,
-				"longitude" : -123.118388
+				lon : -123.118388,
+				lat : 49.284896
 			},
 			{
-				"latitude" : 49.285297,
-				"longitude" : -123.115855
+				lon : -123.115855,
+				lat : 49.285297
 			},
 			{
-				"latitude" : 49.285308,
-				"longitude" : -123.113863
+				lon : -123.113863,
+				lat : 49.285308
 			},
 			{
-				"latitude" : 49.285931,
-				"longitude" : -123.116808
+				lon : -123.116808,
+				lat : 49.285931
 			},
 			{
-				"latitude" : 49.285948,
-				"longitude" : -123.114857
+				lon : -123.114857,
+				lat : 49.285948
 			}
 		],
 
