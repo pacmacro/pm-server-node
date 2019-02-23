@@ -1,5 +1,8 @@
 const bodyParser = require("body-parser");
 const express = require("express");
+const database = require("./database.js");
+const enums = require("./enums.js");
+let playerNameEnum = enums.playerNames;
 
 const serverConfig = require("./config.json");
 
@@ -35,6 +38,7 @@ function setMappings(app) {
 function main() {
   const app = express();
   setMappings(app);
+
   app.listen(serverConfig.port, () => console.log(
     `[INFO] Server listening on http://localhost:${serverConfig.port}.`
   ));
