@@ -2,124 +2,7 @@ const enums = require("./enums.js");
 const playerStateEnums = enums.playerStates;
 const playerNameEnums = enums.playerNames;
 
-module.exports = {
-	/*
-	Params:
-		playerName: valid string using enums.playerNames from enums.js
-	Returns:
-		{lon: x.xxx, lat: x.xxx}
-	asserts playerName is valid
-	*/
-	getPlayerLocation: (playerName) => {
-		return raw.players[playerName].location;
-	},
-
-	/*
-	Returns:
-		object: {enums.PlayerNames.BLINKY: {lon: x.xx, lat: x.xx}, 
-				...CLYDE,
-				...INKY,
-				...PINKY,
-				...PACMAN}
-	*/
-	getPlayerLocations: () => {
-		return {
-			[playerNameEnums.BLINKY]: raw.players[playerNameEnums.BLINKY].location,
-			[playerNameEnums.CLYDE]: raw.players[playerNameEnums.CLYDE].location,
-			[playerNameEnums.INKY]: raw.players[playerNameEnums.INKY].location,
-			[playerNameEnums.PINKY]: raw.players[playerNameEnums.PINKY].location,
-			[playerNameEnums.PACMAN]: raw.players[playerNameEnums.PACMAN].location
-		};
-	},
-
-	/*
-	Params:
-		playerName: valid string using enums.playerNames from enums.js
-	Returns:
-		state using enums.playerStates from enums.js
-	asserts playerName is valid
-	*/
-	getPlayerState: (playerName) => {
-		return raw.players[playerName].state;
-	},
-
-
-	/*
-	Returns:
-		object: {enums.PlayerNames.BLINKY: "state", 
-				...CLYDE,
-				...INKY,
-				...PINKY,
-				...PACMAN}
-	*/
-	getPlayerStates: () => {
-		return {
-			[playerNameEnums.BLINKY]: raw.players[playerNameEnums.BLINKY].state,
-			[playerNameEnums.CLYDE]: raw.players[playerNameEnums.CLYDE].state,
-			[playerNameEnums.INKY]: raw.players[playerNameEnums.INKY].state,
-			[playerNameEnums.PINKY]: raw.players[playerNameEnums.PINKY].state,
-			[playerNameEnums.PACMAN]: raw.players[playerNameEnums.PACMAN].state
-		};
-	},
-
-	/*
-	Params:
-		playerName: valid string using enums.playerNames from enums.js
-	Returns:
-		object: {
-			location: {lon: x.xx, lat: x.xx},
-			state: "state"
-		}
-	asserts playerName is valid
-	*/
-	getPlayer: (playerName) => {
-		return raw.players[playerName];
-	},
-
-	/*
-	Returns:
-		object: {enums.PlayerNames.BLINKY:{
-					location: {lon: x.xx, lat: x.xx},
-					state: "state"
-				}, 
-				...CLYDE,
-				...INKY,
-				...PINKY,
-				...PACMAN}
-	*/
-	getPlayers: () => {
-		return raw.players;
-	},
-
-	/*
-	Params:
-		playerName: valid string using enums.playerNames from enums.js
-		playerLocation: {lon: float, lat: float}
-	Returns:
-		void
-	asserts playerName is valid and playerLocation is properly formated
-	*/
-	setPlayerLocation: (playerName, newLocation) => {
-		raw.players[playerName].location = newLocation;
-	},
-
-	/*
-	Params:
-		playerName: valid string using enums.playerNames from enums.js
-		newState: valid string using enums.playerStates from enums.js
-	Returns:
-		void
-	asserts playerName and newState are valid
-	*/
-	setPlayerState: (playerName, newState) => {
-		raw.players[playerName].state = newState;
-	}
-
-}
-
-
-
-var raw = {
+const raw = {
 	players: {
 		[playerNameEnums.BLINKY]: {
 			location: {
@@ -245,4 +128,119 @@ var raw = {
 	gamestate: {
 
 	}
+}
+
+module.exports = {
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+	Returns:
+		{lon: x.xxx, lat: x.xxx}
+	asserts playerName is valid
+	*/
+	getPlayerLocation: (playerName) => {
+		return raw.players[playerName].location;
+	},
+
+	/*
+	Returns:
+		object: {enums.PlayerNames.BLINKY: {lon: x.xx, lat: x.xx}, 
+				...CLYDE,
+				...INKY,
+				...PINKY,
+				...PACMAN}
+	*/
+	getPlayerLocations: () => {
+		return {
+			[playerNameEnums.BLINKY]: raw.players[playerNameEnums.BLINKY].location,
+			[playerNameEnums.CLYDE]: raw.players[playerNameEnums.CLYDE].location,
+			[playerNameEnums.INKY]: raw.players[playerNameEnums.INKY].location,
+			[playerNameEnums.PINKY]: raw.players[playerNameEnums.PINKY].location,
+			[playerNameEnums.PACMAN]: raw.players[playerNameEnums.PACMAN].location
+		};
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+	Returns:
+		state using enums.playerStates from enums.js
+	asserts playerName is valid
+	*/
+	getPlayerState: (playerName) => {
+		return raw.players[playerName].state;
+	},
+
+
+	/*
+	Returns:
+		object: {enums.PlayerNames.BLINKY: "state", 
+				...CLYDE,
+				...INKY,
+				...PINKY,
+				...PACMAN}
+	*/
+	getPlayerStates: () => {
+		return {
+			[playerNameEnums.BLINKY]: raw.players[playerNameEnums.BLINKY].state,
+			[playerNameEnums.CLYDE]: raw.players[playerNameEnums.CLYDE].state,
+			[playerNameEnums.INKY]: raw.players[playerNameEnums.INKY].state,
+			[playerNameEnums.PINKY]: raw.players[playerNameEnums.PINKY].state,
+			[playerNameEnums.PACMAN]: raw.players[playerNameEnums.PACMAN].state
+		};
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+	Returns:
+		object: {
+			location: {lon: x.xx, lat: x.xx},
+			state: "state"
+		}
+	asserts playerName is valid
+	*/
+	getPlayer: (playerName) => {
+		return raw.players[playerName];
+	},
+
+	/*
+	Returns:
+		object: {enums.PlayerNames.BLINKY:{
+					location: {lon: x.xx, lat: x.xx},
+					state: "state"
+				}, 
+				...CLYDE,
+				...INKY,
+				...PINKY,
+				...PACMAN}
+	*/
+	getPlayers: () => {
+		return raw.players;
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+		playerLocation: {lon: float, lat: float}
+	Returns:
+		void
+	asserts playerName is valid and playerLocation is properly formated
+	*/
+	setPlayerLocation: (playerName, newLocation) => {
+		raw.players[playerName].location = newLocation;
+	},
+
+	/*
+	Params:
+		playerName: valid string using enums.playerNames from enums.js
+		newState: valid string using enums.playerStates from enums.js
+	Returns:
+		void
+	asserts playerName and newState are valid
+	*/
+	setPlayerState: (playerName, newState) => {
+		raw.players[playerName].state = newState;
+	}
+
 }
