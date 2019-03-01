@@ -2,7 +2,7 @@ const enums = require("./enums.js");
 
 /**
  * Define any methods pertaining to a single player here.
- * For any methods used by only Pacman or a ghost, consider extending the Player class
+ * For any methods used by only Pacman or a ghost, consider extending the Player class.
  */
 class Player {
     /**
@@ -13,42 +13,25 @@ class Player {
     constructor(name) {
         this.name = name;
         this.location = {
-            lat: 0,
-            lon: 0
+            latitude: 0,
+            longitude: 0
         };
         this.state = enums.playerStates.UNINITIALIZED;
     }
 
     /**
-     * The get and set methods are the same as the defaults and are redundant.
-     * I just decided to include them for future use. They can be deleted if not used.
-     * Basically, it just returns the location object from calling player.location.
+     * Validation of location should eventually be implemented.
+     * @param {object} location { latitude: number, longitude: number }
      */
-    get location() {
-        return this.location;
-    }
-
-    /**
-     * This setter could be used to validate the location when the location object is assigned.
-     * I dont think it is worth implementing yet.
-     * @param {object} location { lat: number, lon: number }
-     */
-    set location(location) {
+    setLocation(location) {
         this.location = location;
     }
 
     /**
-     * Default getter.
-     */
-    get state() {
-        return this.state;
-    }
-
-    /**
-     * When reassigning player.state, the input is validated before being assigned.
+     * The input is validated before being assigned.
      * @param {string} state The string must belong to enums.playerStates
      */
-    set state(state) {
+    setState(state) {
         if (enums.playerStates.hasOwnProperty(state)) {
             this.state = state;
         } else {
