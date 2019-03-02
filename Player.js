@@ -21,10 +21,21 @@ class Player {
 
     /**
      * Validation of location should eventually be implemented.
+     * 
      * @param {object} location { latitude: number, longitude: number }
      */
     setLocation(location) {
-        this.location = location;
+        // if the location is valid:
+        // float, not null, long(-180, 180), lat (-90, 90)
+        if (enums.pacdotLocations.hasOwnProperty(location))
+        {
+            this.location = {
+                latitude: location.latitude,
+                longitude: location.longitude
+            };
+        }
+        else
+            throw `"${location}" is not a valid location.`;
     }
 
     /**
