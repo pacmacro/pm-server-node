@@ -6,6 +6,8 @@ Prototype Node.js and Express server for relaying information between mobile dev
 
 The official specification for the game can be found [here](https://github.com/pacmacro/pm-specification).
 
+[![System Architecture diagram](readme-img/system-architecture.png)](https://cloudcraft.co/view/e364e7e3-cdc5-48e8-9b5f-82d7ba0d95a6?key=BhmvffJBoBU73zAUh8X22A&embed=true)
+
 ## API Documentation
 
 For comprehensive and clear documentation, see [the wiki](https://github.com/pacmacro/pm-server/wiki/API-Documentation) from the Java implementation.
