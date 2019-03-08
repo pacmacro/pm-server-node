@@ -27,13 +27,11 @@ class Player {
     setLocation(location) {
         // if the location is valid:
         // float, not null, long(-180, 180), lat (-90, 90)
-        if (enums.pacdotLocations.hasOwnProperty(location))
-        {
-            this.location = {
-                latitude: location.latitude,
-                longitude: location.longitude
-            };
-        }
+        const checkLatitude = location.latitude;
+        const checkLongitude = location.longitude;
+
+        if (typeof checkLatitude == "number" && typeof checkLongitude == "number")
+            this.location = location;
         else
             throw `"${location}" is not a valid location.`;
     }
