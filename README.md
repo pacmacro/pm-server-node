@@ -20,3 +20,20 @@ This project is brought to you in part by:
 
 * ![Mobify logo](readme-img/mobify-logo.png) [Mobify](https://www.mobify.com/about/), a sponsor of this Pac Macro implementation
 * [Andy Lumb (alumb)](https://github.com/alumb), the original creator of Pac Macro with the SFU CSSS
+
+## Setup 
+
+### For NodeJS and npm
+
+First install, NodeJS and npm if you dont have it [Download](https://nodejs.org/en/download/).
+Once you're done, open command line and run:
+```
+npm install
+npm start
+```
+Now you should see:
+```
+[INFO] Server listening on http://localhost:3000.
+```
+You can check out the website by [Clicking This](http://localhost:3000).
+Now you're done!
