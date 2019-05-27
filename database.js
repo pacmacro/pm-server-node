@@ -35,6 +35,11 @@ module.exports = {
 	 * @param {number} index
 	 * @returns {Pacdot} Returns deleted element
 	 */
-	deletePacdot: index => pacdots.splice(index, 1)
+	deletePacdot: index => pacdots.splice(index, 1),
+
+	/**
+	 * a quick function so I can start testing the API.
+	 */
+	getPlayersJSON: () => players.map(player => player.getJSON())
 
 }

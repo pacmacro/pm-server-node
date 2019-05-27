@@ -38,6 +38,20 @@ class Player {
             throw `"${state}" is not a valid player state.`;
         }
     }
+
+    /**
+     * Will add validator and make it better later, for now just trying to get something 
+     * @param  {...string} properties Must be valid properties. No argument will return all props
+     */
+    getJSON(...properties) {
+        if (properties.length === 0) {
+            properties = ["name", "state", "location"]
+        }
+        return properties.reduce((acc, cur) => {
+            acc[cur] = this[cur]
+            return acc
+        }, {})
+    }
 }
 
 module.exports = Player;
