@@ -41,6 +41,16 @@ app.get("/player/:name/location", (req, res) =>
         .handler(req, res)
 )
 
+app.get("/pacdots/uneaten",(req, res) => {
+    const query = new Query(game.pacdots)
+    return query.contains("eaten",false).handler(req, res)
+})
+
+app.get("/pacdots",(req, res) => 
+    new Query(game.pacdots).handler(req, res)
+)
+
+
 app.listen(serverConfig.port, () =>
     console.log(
         `[INFO] Server listening on http://localhost:${serverConfig.port}.`
