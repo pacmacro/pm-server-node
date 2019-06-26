@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "checkJs": true,
+        "checkJs": false, // Switch to true to enable type checking
         "target": "es6"
     }
 }
