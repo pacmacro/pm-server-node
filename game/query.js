@@ -17,7 +17,6 @@ class Query {
         this.entities = this.entities.filter(
             entity => entity[property] === value
         )
-        // console.log("contains", this.entities)
         return this
     }
 
@@ -29,7 +28,6 @@ class Query {
                 return newEntity
             })
         })
-        // console.log("hide", this.entities)
         return this
     }
 }
