@@ -1,7 +1,8 @@
 const bodyParser = require("body-parser")
 const express = require("express")
 
-const Query = require("./game/query")
+const Query = require("./middleware/query")
+const Count = require("./middleware/count")
 const Game = require("./game/game")
 
 const app = express()
@@ -53,8 +54,21 @@ app.get("/player/:name/state", (req, res) =>
 
 app.get("/pacdots", new Query(game.pacdots).handler)
 
-app.get("/pacdots/uneaten", (req, res) =>
-    new Query(game.pacdots).contains("eaten", false).handler(req, res)
+app.get(
+    "/pacdots/uneaten",
+    new Query(game.pacdots).contains("eaten", false).handler
+)
+
+app.get(
+    "/pacdots/count",
+    new Count(game.pacdots)
+        .addCount("total", () => true)
+        .addCount("eaten", pacdot => pacdot.eaten)
+        .addCount("uneaten", pacdot => !pacdot.eaten)
+        .addCount(
+            "uneatenPowerdots",
+            pacdot => !pacdot.eaten && pacdot.powerdot
+        ).handler
 )
 
 app.listen(serverConfig.port, () =>
