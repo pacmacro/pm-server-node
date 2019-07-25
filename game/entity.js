@@ -6,6 +6,10 @@ class Entity {
     constructor(location) {
         this.location = location
     }
+
+    setLocation(location) {
+        this.location = location
+    }
 }
 
 module.exports = Entity

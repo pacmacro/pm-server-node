@@ -3,6 +3,7 @@ const express = require("express")
 
 const Query = require("./middleware/query")
 const Count = require("./middleware/count")
+const Update = require("./middleware/update")
 const Game = require("./game/game")
 
 const app = express()
@@ -75,4 +76,11 @@ app.listen(serverConfig.port, () =>
     console.log(
         `[INFO] Server listening on http://localhost:${serverConfig.port}.`
     )
+)
+
+app.post("/player/:name", (req, res) =>
+    new Update(game.players)
+        .contains("name", req.params.name)
+        .replace("location", req.body)
+        .handler(req, res)
 )
