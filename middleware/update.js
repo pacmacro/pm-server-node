@@ -12,9 +12,9 @@ class Update {
     }
 
     replace(property, value) {
-        this.entities = this.entities.map(entity =>
-            Object.defineProperty(entity, property, { writable: true, value })
-        )
+        for (let i = 0; i < this.entities.length; i += 1) {
+            this.entities[i][property] = value
+        }
         return this
     }
 }
