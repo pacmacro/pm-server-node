@@ -94,3 +94,21 @@ app.put("/player/:name/location", (req, res) =>
         .replace("location", req.body)
         .handler(req, res)
 )
+
+app.delete("/player/:name", (req, res) =>
+    new Update(game.players)
+        .contains("name", req.params.name)
+        .replace("state", "uninitialized")
+        .handler(req, res)
+)
+
+app.post("/admin/pacdots/reset", (req, res) =>
+    new Update(game.pacdots).replace("uneaten", false).handler(req, res)
+)
+
+app.put("/admin/player/:name/state", (req, res) =>
+    new Update(game.players)
+        .contains("name", req.params.name)
+        .replace("state", req.body.state)
+        .handler(req, res)
+)
