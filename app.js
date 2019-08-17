@@ -33,11 +33,17 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
-app.get("/player/details", new Query(game.players).handler)
+app.get("/player/details", (req, res) =>
+    new Query(game.players).handler(req, res)
+)
 
-app.get("/player/locations", new Query(game.players).hide("state").handler)
+app.get("/player/locations", (req, res) =>
+    new Query(game.players).hide("state").handler(req, res)
+)
 
-app.get("/player/states", new Query(game.players).hide("location").handler)
+app.get("/player/states", (req, res) =>
+    new Query(game.players).hide("location").handler(req, res)
+)
 
 app.get("/player/:name/location", (req, res) =>
     new Query(game.players)
@@ -53,23 +59,20 @@ app.get("/player/:name/state", (req, res) =>
         .handler(req, res)
 )
 
-app.get("/pacdots", new Query(game.pacdots).handler)
+app.get("/pacdots", (req, res) => new Query(game.pacdots).handler(req, res))
 
-app.get(
-    "/pacdots/uneaten",
-    new Query(game.pacdots).contains("eaten", false).handler
+app.get("/pacdots/uneaten", (req, res) =>
+    new Query(game.pacdots).contains("eaten", false).handler(req, res)
 )
 
-app.get(
-    "/pacdots/count",
+// prettier-ignore
+app.get("/pacdots/count", (req, res) =>
     new Count(game.pacdots)
         .addCount("total", () => true)
         .addCount("eaten", pacdot => pacdot.eaten)
         .addCount("uneaten", pacdot => !pacdot.eaten)
-        .addCount(
-            "uneatenPowerdots",
-            pacdot => !pacdot.eaten && pacdot.powerdot
-        ).handler
+        .addCount("uneatenPowerdots", pacdot => !pacdot.eaten && pacdot.powerdot)
+        .handler(req, res)
 )
 
 app.listen(serverConfig.port, () =>
@@ -82,5 +85,30 @@ app.post("/player/:name", (req, res) =>
     new Update(game.players)
         .contains("name", req.params.name)
         .replace("location", req.body)
+        .handler(req, res)
+)
+
+app.put("/player/:name/location", (req, res) =>
+    new Update(game.players)
+        .contains("name", req.params.name)
+        .replace("location", req.body)
+        .handler(req, res)
+)
+
+app.delete("/player/:name", (req, res) =>
+    new Update(game.players)
+        .contains("name", req.params.name)
+        .replace("state", "uninitialized")
+        .handler(req, res)
+)
+
+app.post("/admin/pacdots/reset", (req, res) =>
+    new Update(game.pacdots).replace("uneaten", false).handler(req, res)
+)
+
+app.put("/admin/player/:name/state", (req, res) =>
+    new Update(game.players)
+        .contains("name", req.params.name)
+        .replace("state", req.body.state)
         .handler(req, res)
 )
