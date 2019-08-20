@@ -5,9 +5,10 @@ const Query = require("./middleware/query")
 const Count = require("./middleware/count")
 const Update = require("./middleware/update")
 const Game = require("./game/game")
+const { STATE } = require("./enums")
 
 const app = express()
-const game = new Game()
+let game = new Game()
 game.startLoop(1000)
 
 const serverConfig = require("./config")
@@ -114,5 +115,10 @@ app.put("/admin/player/:name/state", (req, res) =>
 
 app.put("/admin/gamestate", (req, res) => {
     game.setState(req.body.state.toLowerCase())
+    if (game.state === STATE.INITIALIZING) {
+        game.stopLoop()
+        game = new Game()
+        game.startLoop()
+    }
     return (req, res) => res.status(200).send({})
 })
