@@ -8,8 +8,9 @@ const Game = require("./game/game")
 
 const app = express()
 const game = new Game()
+game.startLoop(1000)
 
-const serverConfig = require("./config.json")
+const serverConfig = require("./config")
 
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -33,19 +34,20 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
-app.get("/player/details", (req, res) =>
-    new Query(game.players).handler(req, res)
-)
+app.get("/player/details", (req, res) => new Query(game.players).handler(req, res))
 
-app.get("/player/locations", (req, res) =>
-    new Query(game.players).hide("state").handler(req, res)
-)
+app.get("/player/locations", (req, res) => new Query(game.players).hide("state").handler(req, res))
 
-app.get("/player/states", (req, res) =>
-    new Query(game.players).hide("location").handler(req, res)
-)
+app.get("/player/states", (req, res) => new Query(game.players).hide("location").handler(req, res))
 
 app.get("/player/:name/location", (req, res) =>
+    new Query(game.players)
+        .contains("name", req.params.name)
+        .hide("name", "state")
+        .handler(req, res)
+)
+
+app.get("/player/:name", (req, res) =>
     new Query(game.players)
         .contains("name", req.params.name)
         .hide("name", "state")
@@ -65,7 +67,6 @@ app.get("/pacdots/uneaten", (req, res) =>
     new Query(game.pacdots).contains("eaten", false).handler(req, res)
 )
 
-// prettier-ignore
 app.get("/pacdots/count", (req, res) =>
     new Count(game.pacdots)
         .addCount("total", () => true)
@@ -76,9 +77,7 @@ app.get("/pacdots/count", (req, res) =>
 )
 
 app.listen(serverConfig.port, () =>
-    console.log(
-        `[INFO] Server listening on http://localhost:${serverConfig.port}.`
-    )
+    console.log(`[INFO] Server listening on http://localhost:${serverConfig.port}.`)
 )
 
 app.post("/player/:name", (req, res) =>
@@ -112,3 +111,8 @@ app.put("/admin/player/:name/state", (req, res) =>
         .replace("state", req.body.state)
         .handler(req, res)
 )
+
+app.put("/admin/gamestate", (req, res) => {
+    game.setState(req.body.state.toLowerCase())
+    return (req, res) => res.status(200).send({})
+})
