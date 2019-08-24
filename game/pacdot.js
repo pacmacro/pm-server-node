@@ -16,6 +16,10 @@ class Pacdot extends Entity {
         this.powerdot = isPowerdot
     }
 
+    eat() {
+        this.eaten = true
+    }
+
     /**
      * Location validation should be implemented eventually.
      * @param {{ latitude: number, longitude: number }} location

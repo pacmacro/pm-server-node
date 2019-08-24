@@ -1,3 +1,5 @@
+const { eatDistance } = require("../config")
+
 class Entity {
     /**
      * @constructor
@@ -7,8 +9,13 @@ class Entity {
         this.location = location
     }
 
-    setLocation(location) {
-        this.location = location
+    isNear(entity) {
+        const distance = Math.max(
+            Math.abs(this.location.latitude - entity.location.latitude),
+            Math.abs(this.location.longitude - entity.location.longitude)
+        )
+        if (distance < eatDistance) return true
+        return false
     }
 }
 

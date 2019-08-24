@@ -1,4 +1,4 @@
-const enums = require("../enums.js")
+const { STATE } = require("../enums.js")
 const Entity = require("./entity")
 
 /**
@@ -17,27 +17,7 @@ class Player extends Entity {
             longitude: 0
         })
         this.name = name
-        this.state = enums.player.states.UNINITIALIZED
-    }
-
-    /**
-     * Validation of location should eventually be implemented.
-     * @param {{ latitude: number, longitude: number }} location
-     */
-    setLocation(location) {
-        this.location = location
-    }
-
-    /**
-     * The input is validated before being assigned.
-     * @param {string} state The string must belong to enums.playerStates
-     */
-    setState(state) {
-        if (enums.playerStates.hasOwnProperty(state)) {
-            this.state = state
-        } else {
-            throw new Error(`"${state}" is not a valid player state.`)
-        }
+        this.state = STATE.UNINITIALIZED
     }
 
     get properties() {
