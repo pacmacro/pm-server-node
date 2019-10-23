@@ -11,6 +11,7 @@ const app = express()
 let game = new Game()
 game.startLoop(1000)
 
+// part of an epic pr
 const serverConfig = require("./config")
 
 app.use(bodyParser.json())
@@ -35,11 +36,17 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
-app.get("/player/details", (req, res) => new Query(game.players).handler(req, res))
+app.get("/player/details", (req, res) =>
+    new Query(game.players).handler(req, res)
+)
 
-app.get("/player/locations", (req, res) => new Query(game.players).hide("state").handler(req, res))
+app.get("/player/locations", (req, res) =>
+    new Query(game.players).hide("state").handler(req, res)
+)
 
-app.get("/player/states", (req, res) => new Query(game.players).hide("location").handler(req, res))
+app.get("/player/states", (req, res) =>
+    new Query(game.players).hide("location").handler(req, res)
+)
 
 app.get("/player/:name/location", (req, res) =>
     new Query(game.players)
@@ -73,12 +80,17 @@ app.get("/pacdots/count", (req, res) =>
         .addCount("total", () => true)
         .addCount("eaten", pacdot => pacdot.eaten)
         .addCount("uneaten", pacdot => !pacdot.eaten)
-        .addCount("uneatenPowerdots", pacdot => !pacdot.eaten && pacdot.powerdot)
+        .addCount(
+            "uneatenPowerdots",
+            pacdot => !pacdot.eaten && pacdot.powerdot
+        )
         .handler(req, res)
 )
 
 app.listen(serverConfig.port, () =>
-    console.log(`[INFO] Server listening on http://localhost:${serverConfig.port}.`)
+    console.log(
+        `[INFO] Server listening on http://localhost:${serverConfig.port}.`
+    )
 )
 
 app.post("/player/:name", (req, res) =>
