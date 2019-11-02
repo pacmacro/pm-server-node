@@ -48,7 +48,7 @@ class Game {
             let pacmanHasWon = true
             this.pacdots.forEach(pacdot => {
                 pacmanHasWon = false
-                if (this.pacman.isNear(pacdot) && pacdot.eaten === false) {
+                if (this.pacdot.isNear(pacman) && pacdot.eaten === false) {
                     pacdot.eat()
                     console.log("nom! nom!")
                     if (pacdot.powerdot) {
