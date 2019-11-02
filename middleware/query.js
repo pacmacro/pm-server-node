@@ -21,6 +21,7 @@ class Query {
         return this
     }
 
+    // Desc: hide specific data on json file output
     hide(...properties) {
         properties.forEach(property => {
             this.entities = this.entities.map(entity => {
