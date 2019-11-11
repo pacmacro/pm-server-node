@@ -35,6 +35,7 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
+
 // Desc: Show all the info about each players (include "name", "locations", and "state")
 app.get("/player/details", (req, res) => new Query(game.players).handler(req, res))
 
@@ -57,7 +58,7 @@ app.get("/player/:name/location", (req, res) =>
 app.get("/player/:name", (req, res) =>
     new Query(game.players)
         .contains("name", req.params.name)
-        // .hide("name", "state")       // Why do you have another command that does the same thing as the one above?
+        .hide("name", "state")       // Why do you have another command that does the same thing as the one above?
         .handler(req, res)
 )
 
