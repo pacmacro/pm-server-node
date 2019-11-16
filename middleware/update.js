@@ -1,9 +1,15 @@
+/**
+ * class for updating the data.
+ * 
+ * @class
+ */
 class Update {
     constructor(entities) {
         this.entities = entities
         this.handler = (req, res) => res.status(200).send({})
     }
 
+    // Desc: find specific data with a specific parameter
     contains(property, value) {
         this.entities = this.entities.filter(
             entity => entity[property] === value

@@ -1,5 +1,6 @@
 /**
- * A class for querying data. It basically it basically starts with all info about entities then then filters out fields
+ * A class for querying data. 
+ * It basically starts with all info about entities, and then filters out fields.
  * @class
  */
 class Query {
@@ -20,6 +21,7 @@ class Query {
         return this
     }
 
+    // Desc: hide specific data on json file output
     hide(...properties) {
         properties.forEach(property => {
             this.entities = this.entities.map(entity => {

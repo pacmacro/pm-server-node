@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# some annoying files and directories
+.DS_Store
+.dist

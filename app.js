@@ -35,12 +35,17 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
+
+// Desc: Show all the info about each players (include "name", "locations", and "state")
 app.get("/player/details", (req, res) => new Query(game.players).handler(req, res))
 
+// Desc: Show location info (latitude and longtitude) about each players
 app.get("/player/locations", (req, res) => new Query(game.players).hide("state").handler(req, res))
 
+// Desc: Show the current states of each players
 app.get("/player/states", (req, res) => new Query(game.players).hide("location").handler(req, res))
 
+// Desc: Show the location info of a specific player
 app.get("/player/:name/location", (req, res) =>
     new Query(game.players)
         .contains("name", req.params.name)
@@ -48,13 +53,16 @@ app.get("/player/:name/location", (req, res) =>
         .handler(req, res)
 )
 
+// Desc: Show all the info of a specific player
+// Note: I temporary change this command to showing everything about a specific player
 app.get("/player/:name", (req, res) =>
     new Query(game.players)
         .contains("name", req.params.name)
-        .hide("name", "state")
+        .hide("name", "state")       // Why do you have another command that does the same thing as the one above?
         .handler(req, res)
 )
 
+// Desc: Show the current state of a specific player
 app.get("/player/:name/state", (req, res) =>
     new Query(game.players)
         .contains("name", req.params.name)
@@ -62,12 +70,16 @@ app.get("/player/:name/state", (req, res) =>
         .handler(req, res)
 )
 
+// Desc: Show all the info about each pacdots (include: "location", "eaten", "powerdot")
 app.get("/pacdots", (req, res) => new Query(game.pacdots).handler(req, res))
 
+// Desc: Show all the uneaten pacdots in the game
+// Note: I hide the eaten since it is obvious that all of them are false
 app.get("/pacdots/uneaten", (req, res) =>
-    new Query(game.pacdots).contains("eaten", false).handler(req, res)
+    new Query(game.pacdots).contains("eaten", false).hide("eaten").handler(req, res)
 )
 
+// Desc: show the number of pacdots (include total, eaten, uneaten, and uneatenPowerdots)
 app.get("/pacdots/count", (req, res) =>
     new Count(game.pacdots)
         .addCount("total", () => true)
@@ -81,6 +93,7 @@ app.listen(serverConfig.port, () =>
     console.log(`[INFO] Server listening on http://localhost:${serverConfig.port}.`)
 )
 
+// Desc: Show all the info of a specific player
 app.post("/player/:name", (req, res) =>
     new Update(game.players)
         .contains("name", req.params.name)
