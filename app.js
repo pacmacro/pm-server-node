@@ -1,6 +1,5 @@
 const bodyParser = require("body-parser")
 const express = require("express")
-
 const Query = require("./middleware/query")
 const Count = require("./middleware/count")
 const Update = require("./middleware/update")
@@ -35,7 +34,6 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
-
 // Desc: Show all the info about each players (include "name", "locations", and "state")
 app.get("/player/details", (req, res) => new Query(game.players).handler(req, res))
 
@@ -58,7 +56,7 @@ app.get("/player/:name/location", (req, res) =>
 app.get("/player/:name", (req, res) =>
     new Query(game.players)
         .contains("name", req.params.name)
-        .hide("name", "state")       // Why do you have another command that does the same thing as the one above?
+        .hide("name", "state") // Why do you have another command that does the same thing as the one above?
         .handler(req, res)
 )
 
@@ -76,7 +74,10 @@ app.get("/pacdots", (req, res) => new Query(game.pacdots).handler(req, res))
 // Desc: Show all the uneaten pacdots in the game
 // Note: I hide the eaten since it is obvious that all of them are false
 app.get("/pacdots/uneaten", (req, res) =>
-    new Query(game.pacdots).contains("eaten", false).hide("eaten").handler(req, res)
+    new Query(game.pacdots)
+        .contains("eaten", false)
+        .hide("eaten")
+        .handler(req, res)
 )
 
 // Desc: show the number of pacdots (include total, eaten, uneaten, and uneatenPowerdots)
