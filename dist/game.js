@@ -1,41 +1,43 @@
-const game: game = {
-    state: STATE.UNINITIALIZED,
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const game = {
+    state: "uninitialized" /* UNINITIALIZED */,
     players: [
         {
-            name: NAME.PACMAN,
-            state: STATE.UNINITIALIZED,
+            name: "pacman" /* PACMAN */,
+            state: "uninitialized" /* UNINITIALIZED */,
             location: {
                 latitude: 0,
                 longitude: 0
             }
         },
         {
-            name: NAME.BLINKY,
-            state: STATE.UNINITIALIZED,
+            name: "blinky" /* BLINKY */,
+            state: "uninitialized" /* UNINITIALIZED */,
             location: {
                 latitude: 0,
                 longitude: 0
             }
         },
         {
-            name: NAME.CLYDE,
-            state: STATE.UNINITIALIZED,
+            name: "clyde" /* CLYDE */,
+            state: "uninitialized" /* UNINITIALIZED */,
             location: {
                 latitude: 0,
                 longitude: 0
             }
         },
         {
-            name: NAME.INKY,
-            state: STATE.UNINITIALIZED,
+            name: "inky" /* INKY */,
+            state: "uninitialized" /* UNINITIALIZED */,
             location: {
                 latitude: 0,
                 longitude: 0
             }
         },
         {
-            name: NAME.PINKY,
-            state: STATE.UNINITIALIZED,
+            name: "pinky" /* PINKY */,
+            state: "uninitialized" /* UNINITIALIZED */,
             location: {
                 latitude: 0,
                 longitude: 0
@@ -169,6 +171,6 @@ const game: game = {
             powerdot: true
         }
     ]
-}
-
-export default game
+};
+exports.default = game;
+//# sourceMappingURL=game.js.map
