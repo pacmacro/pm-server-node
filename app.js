@@ -34,7 +34,7 @@ app.all("*", (req, res, next) => {
     console.log(`[INFO] Replying to request with HTTP ${res.statusCode}`)
     res.end()
 })
-
+// add here
 app.get("/player/details", (req, res) => new Query(game.players).handler(req, res))
 
 app.get("/player/locations", (req, res) => new Query(game.players).hide("state").handler(req, res))
