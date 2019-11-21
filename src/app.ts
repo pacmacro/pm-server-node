@@ -2,19 +2,11 @@ import bodyParser from "body-parser"
 import express from "express"
 import game from "./game"
 
+const port = 3000
+
 const app = express()
 
-const port = 8000
-
-// const serverConfig = require("./config")
-
-const filterByProperty = (entities: entity[], key: string, value: string | boolean) =>
-    entities.filter(entity => {
-        if (entity[key] === value) return true
-        return false
-    })
-
-const hideProperties = (entities: entity[], ...keys: string[]) =>
+const hideProperties = (entities: entity[], ...keys: KEY[]) =>
     entities.map(entity => {
         // this line makes a deep copy of the entity
         const newEntity = Object.assign({}, entity)
@@ -25,6 +17,21 @@ const hideProperties = (entities: entity[], ...keys: string[]) =>
         console.log(newEntity)
         return newEntity
     })
+
+const replaceProperties = (entities: any[], contents: {}, replacement: {}) => {
+    for (const entity of entities) {
+        // evaluates true if entity has matching keys and values with contents
+        // prettier-ignore
+        if (Object.keys(contents).reduce(
+            (previous, current) => previous && entity[current] === contents[current],
+            true
+        )) {
+            for (const key of Object.keys(replacement)) {
+                entity[key] = replacement[key]
+            }
+        }
+    }
+}
 
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -48,116 +55,111 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
-// Desc: Show all the info about each players (include "name", "locations", and "state")
 // prettier-ignore
 app.get("/player/details", (req, res) => res.status(200).send(
     game.players
 ))
 
-// Desc: Show location info (latitude and longtitude) about each players
 // prettier-ignore
 app.get("/player/locations", (req, res) => res.status(200).send(
-    hideProperties(game.players, "state")
+    hideProperties(game.players, KEY.STATE)
 ))
 
-// Desc: Show the current states of each players
 // prettier-ignore
 app.get("/player/states", (req, res) => res.status(200).send(
-    hideProperties(game.players, "location")
+    hideProperties(game.players, KEY.LOCATION)
 ))
 
-// Desc: Show the location info of a specific player
 // prettier-ignore
 app.get("/player/:name/location", (req, res) => res.status(200).send(
     hideProperties(
-        filterByProperty(game.players, "name", req.params.name), 
-        "name", 
-        "state"
+        game.players.filter(player => player.name === req.params.name), 
+        KEY.NAME, 
+        KEY.STATE
     )
 ))
 
-// Desc: Show all the info of a specific player
 // prettier-ignore
 app.get("/player/:name", (req, res) => res.status(200).send(
     hideProperties(
-        filterByProperty(game.players, "name", req.params.name), 
-        "name"
+        game.players.filter(player => player.name === req.params.name), 
+        KEY.NAME
     )
 ))
 
-// Desc: Show the current state of a specific player
 // prettier-ignore
 app.get("/player/:name/location", (req, res) => res.status(200).send(
     hideProperties(
-        filterByProperty(game.players, "name", req.params.name),
-        "name",
-        "location"
+        game.players.filter(player => player.name === req.params.name),
+        KEY.NAME,
+        KEY.LOCATION
     )
 ))
 
-// Desc: Show all the info about each pacdots (include: "location", "eaten", "powerdot")
 app.get("/pacdots", (req, res) => res.status(200).send(game.players))
 
-// Desc: Show all the uneaten pacdots in the game
 // prettier-ignore
 app.get("/pacdots/uneaten", (req, res) => res.status(200).send(
     hideProperties(
-        filterByProperty(game.players, "eaten", false),
-        "eaten"
+        game.pacdots.filter(pacdot => pacdot.eaten === false),
+        KEY.EATEN
     )
 ))
 
-// // Desc: show the number of pacdots (include total, eaten, uneaten, and uneatenPowerdots)
-// app.get("/pacdots/count", (req, res) =>
-//     new Count(game.pacdots)
-//         .addCount("total", () => true)
-//         .addCount("eaten", pacdot => pacdot.eaten)
-//         .addCount("uneaten", pacdot => !pacdot.eaten)
-//         .addCount("uneatenPowerdots", pacdot => !pacdot.eaten && pacdot.powerdot)
-//         .handler(req, res)
-// )
+// prettier-ignore
+app.get("/pacdots/count", (req, res) => res.status(200).send({
+    total: game.pacdots.length,
+    eaten: game.pacdots.filter(pacdot => pacdot.eaten === true).length,
+    uneaten: game.pacdots.filter(pacdot => pacdot.eaten === false).length,
+    uneatenPowerdots: game.pacdots.filter(pacdot => pacdot.powerdot === true && pacdot.eaten === false).length
+}))
 
-// // Desc: Show all the info of a specific player
-// app.post("/player/:name", (req, res) =>
-//     new Update(game.players)
-//         .contains("name", req.params.name)
-//         .replace("location", req.body)
-//         .handler(req, res)
-// )
+app.post("/player/:name", (req, res) => {
+    replaceProperties(
+        game.players,
+        { name: req.params.name },
+        { location: req.body }
+    )
+    res.status(200).send({})
+})
 
-// app.put("/player/:name/location", (req, res) =>
-//     new Update(game.players)
-//         .contains("name", req.params.name)
-//         .replace("location", req.body)
-//         .handler(req, res)
-// )
+app.put("/player/:name/location", (req, res) => {
+    replaceProperties(
+        game.players,
+        { name: req.params.name },
+        { location: req.body }
+    )
+    res.status(200).send({})
+})
 
-// app.delete("/player/:name", (req, res) =>
-//     new Update(game.players)
-//         .contains("name", req.params.name)
-//         .replace("state", "uninitialized")
-//         .handler(req, res)
-// )
+app.delete("/player/:name", (req, res) => {
+    replaceProperties(
+        game.players,
+        { name: req.params.name },
+        { state: STATE.UNINITIALIZED }
+    )
+    res.status(200).send({})
+})
 
-// app.post("/admin/pacdots/reset", (req, res) =>
-//     new Update(game.pacdots).replace("uneaten", false).handler(req, res)
-// )
+app.post("/admin/pacdots/reset", (req, res) => {
+    replaceProperties(game.pacdots, {}, { eaten: false })
+    res.status(200).send({})
+})
 
-// app.put("/admin/player/:name/state", (req, res) =>
-//     new Update(game.players)
-//         .contains("name", req.params.name)
-//         .replace("state", req.body.state)
-//         .handler(req, res)
-// )
+app.put("/admin/player/:name/state", (req, res) => {
+    replaceProperties(
+        game.players,
+        { name: req.params.name },
+        { state: req.body.state }
+    )
+    res.status(200).send({})
+})
 
-// app.put("/admin/gamestate", (req, res) => {
-//     game.setState(req.body.state.toLowerCase())
-//     if (game.state === STATE.INITIALIZING) {
-//         game.stopLoop()
-//         game = new Game()
-//         game.startLoop()
-//     }
-//     return (req, res) => res.status(200).send({})
-// })
+app.put("/admin/gamestate", (req, res) => {
+    game.state = req.body.state.toLowerCase()
+    res.status(200).send({})
+})
 
-app.listen(port, () => console.log(`[INFO] Server listening on http://localhost:${port}.`))
+app.listen(port, () =>
+    console.log(`[INFO] Server listening on http://localhost:${port}.`)
+)

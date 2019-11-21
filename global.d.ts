@@ -11,6 +11,14 @@ declare const enum STATE {
     READY = "ready"
 }
 
+declare const enum KEY {
+    NAME = "name",
+    STATE = "state",
+    LOCATION = "location",
+    EATEN = "eaten",
+    POWERDOT = "powerdot"
+}
+
 declare const enum NAME {
     PACMAN = "pacman",
     BLINKY = "blinky",
