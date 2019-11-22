@@ -32,14 +32,16 @@ declare interface location {
     longitude: number
 }
 
-declare interface player {
-    name: NAME
-    state: STATE
+declare interface entity {
     location: location
 }
 
-declare interface pacdot {
-    location: location
+declare interface player extends entity {
+    name: NAME
+    state: STATE
+}
+
+declare interface pacdot extends entity {
     eaten: boolean
     powerdot: boolean
 }
@@ -49,5 +51,3 @@ declare interface game {
     players: player[]
     pacdots: pacdot[]
 }
-
-declare type entity = player | pacdot

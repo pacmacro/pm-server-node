@@ -1,4 +1,6 @@
 {
     "port": 3000,
-    "eatDistance": 20
+    "eatDistance": 20,
+    "gameplayLoopTime": 1000,
+    "powerupTime": 60000
 }

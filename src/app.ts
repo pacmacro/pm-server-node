@@ -1,7 +1,11 @@
 import bodyParser from "body-parser"
 import express from "express"
 import game from "./game"
+import play from "./play"
 import config from "../config.json"
+
+// start core gameplay loop
+setInterval(() => play(game), config.gameplayLoopTime)
 
 const app = express()
 
@@ -10,10 +14,8 @@ const hideProperties = (entities: entity[], ...keys: KEY[]) =>
         // this line makes a deep copy of the entity
         const newEntity = Object.assign({}, entity)
         for (const key of keys) {
-            console.log("deleting", key)
             delete newEntity[key]
         }
-        console.log(newEntity)
         return newEntity
     })
 
@@ -31,35 +33,6 @@ const replaceProperties = (entities: any[], contents: {}, replacement: {}) => {
         }
     }
 }
-
-const getDistanceBetween = (location1: location, location2: location) => {
-    // radius of the earth in km
-    const radius = 6371
-
-    // convert from degrees to radians
-    const lat1 = (location1.latitude / 180) * Math.PI
-    const lat2 = (location2.latitude / 180) * Math.PI
-    const lon1 = (location1.longitude / 180) * Math.PI
-    const lon2 = (location2.longitude / 180) * Math.PI
-
-    // https://en.wikipedia.org/wiki/Equirectangular_projection
-    const x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2)
-    const y = lat2 - lat1
-    const distance = Math.sqrt(x * x + y * y) * radius
-
-    // returns integer in meters
-    return Math.floor(distance * 1000)
-}
-
-const isNear = (entity1: entity, entity2: entity) =>
-    getDistanceBetween(entity1.location, entity2.location) <= config.eatDistance
-
-console.log(
-    getDistanceBetween(
-        { latitude: 49.282365, longitude: -123.114479 },
-        { latitude: 49.282009, longitude: -123.120824 }
-    )
-)
 
 app.use(bodyParser.json())
 app.use(express.static("public"))
