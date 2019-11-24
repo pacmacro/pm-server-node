@@ -4,10 +4,11 @@ import game from "./game"
 import play from "./play"
 import config from "../config.json"
 
+const port = process.env.PORT || config.port
+const app = express()
+
 // start core gameplay loop
 setInterval(() => play(game), config.gameplayLoopTime)
-
-const app = express()
 
 const hideProperties = (entities: entity[], ...keys: KEY[]) =>
     entities.map(entity => {
@@ -161,6 +162,6 @@ app.put("/admin/gamestate", (req, res) => {
     res.status(200).send({})
 })
 
-app.listen(config.port, () =>
-    console.log(`[INFO] Server listening on http://localhost:${config.port}.`)
+app.listen(port, () =>
+    console.log(`[INFO] Server listening on http://localhost:${port}.`)
 )

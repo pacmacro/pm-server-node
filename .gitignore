@@ -2,8 +2,6 @@
 node_modules/
 dist/
 
-package-lock.json
-
 # test files if you want to try out a js feature
 test.js
 test.ts
