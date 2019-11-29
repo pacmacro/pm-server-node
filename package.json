@@ -4,7 +4,9 @@
     "description": "Prototype Express server for relaying information between mobile devices for the game Pac Macro.",
     "main": "dist/app.js",
     "scripts": {
-        "start": "tsc && node dist/app.js",
+        "start": "node dist/src/app.js",
+        "build-ts": "tsc",
+        "postinstall": "npm run build-ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
