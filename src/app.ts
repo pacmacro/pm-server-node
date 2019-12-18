@@ -162,6 +162,8 @@ app.put("/admin/gamestate", (req, res) => {
     res.status(200).send({})
 })
 
+app.use((req, res) => res.status(404).send({ error: "Not found" }))
+
 app.listen(port, () =>
     console.log(`[INFO] Server listening on http://localhost:${port}.`)
 )
