@@ -17,3 +17,33 @@ a {
 .home-text {
   font-size: 3em;
 }
+
+table {
+  margin-top: 50px;
+  margin-left: 80%;
+  margin-right: 10%;
+  position: relative;
+}
+
+th {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+td {
+  margin-right: 15px;
+  height: 20px;
+}
+
+.tb-title {
+  font-size: 1.25em;
+}
+
+.tb-data-row {
+  height: 25px;
+}
+
+.player-icon {
+  height: 20px;
+  width: 20px;
+}
