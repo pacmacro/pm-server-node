@@ -35,6 +35,12 @@ const replaceProperties = (entities: any[], contents: {}, replacement: {}) => {
     }
 }
 
+//Use regex to check whether the lat long input is valid
+const bodyCheck = (body: string) => {
+    let obj = JSON.parse(body)
+    
+}
+
 app.use(bodyParser.json())
 app.use(express.static("public"))
 
@@ -57,6 +63,14 @@ app.all("*", (req, res, next) => {
     res.end()
 })
 
+//Catches async errors
+process.on('uncaughtException', (err) => console.error('global exception:', err.message))
+
+//Avoiding callback problems
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('unhandled promise rejection:', reason)
+})
+
 // prettier-ignore
 app.get("/player/details", (req, res) => res.status(200).send(
     game.players
@@ -73,7 +87,7 @@ app.get("/player/states", (req, res) => res.status(200).send(
 ))
 
 // prettier-ignore
-app.get("/player/:name/location", (req, res) => res.status(200).send(
+app.get("/player/:name/state", (req, res) => res.status(200).send(
     hideProperties(
         game.players.filter(player => player.name === req.params.name), 
         KEY.NAME, 
@@ -117,6 +131,13 @@ app.get("/pacdots/count", (req, res) => res.status(200).send({
 }))
 
 app.post("/player/:name", (req, res) => {
+
+    // if (bodyCheck(req.body)) {
+
+    // }else {
+    //     res.status(400).send({"status": 400})
+    // }
+
     replaceProperties(
         game.players,
         { name: req.params.name },
@@ -162,7 +183,16 @@ app.put("/admin/gamestate", (req, res) => {
     res.status(200).send({})
 })
 
-app.use((req, res) => res.status(404).send({ error: "Not found" }))
+//ERROR HANDLING
+//Checks for sync errors
+app.use((err, req, res, next) => {
+    console.error(err.message)
+    res.status(500)
+    res.send('error' + err.message + '\n')
+})
+
+//Returns 404 for any invalid route
+app.use((req, res) => res.status(404).send({ status: 404, error: "Not found" }))
 
 app.listen(port, () =>
     console.log(`[INFO] Server listening on http://localhost:${port}.`)
