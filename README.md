@@ -1,8 +1,8 @@
-# Pac Macro Server (Node.js and Express)
+# Pac Macro Server (Node.js, TypeScript, and Express)
 
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/pacmacro/pm-server-node/blob/master/LICENSE)
 
-Prototype Node.js and Express server for relaying information between mobile devices for the game Pac Macro.
+Prototype server written in Node.js, TypeScript and Express for relaying information between mobile devices for the game Pac Macro.
 
 The official specification for the game can be found [here](https://github.com/pacmacro/pm-specification).
 
