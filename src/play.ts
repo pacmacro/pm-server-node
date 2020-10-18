@@ -45,7 +45,7 @@ const pacmanHasWon = (pacdots: pacdot[]) =>
 // The play function is called on an interval that gan be found in config.json
 // note: please have this function be the only one that takes game as an arguement
 const play = (game: game) => {
-    if (this.state === STATE.IN_PROGRESS) {
+    if (game.state === STATE.IN_PROGRESS) {
         eatPacdots(game.players[0], game.pacdots)
 
         if (pacmanHasWon(game.pacdots)) {

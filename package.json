@@ -20,13 +20,13 @@
     },
     "homepage": "https://github.com/pacmacro/pm-server-node#readme",
     "dependencies": {
-        "body-parser": "^1.18.3",
+        "body-parser": "^1.19.0",
         "express": "^4.17.1"
     },
     "devDependencies": {
-        "@types/express": "^4.17.2",
-        "prettier": "^1.17.1",
+        "@types/express": "^4.17.8",
+        "prettier": "^2.1.2",
         "tslint": "^5.20.1",
-        "typescript": "^3.7.2"
+        "typescript": "^4.0.3"
     }
 }
